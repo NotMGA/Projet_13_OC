@@ -1,13 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from './authservice'
-import PostUser from './Edituser'
+import PostUser from './Edituser.js'
 import Get_info_user from './Userinfo'
 
 const user = JSON.parse(localStorage.getItem('user'))
 const info = JSON.parse(localStorage.getItem('info'))
+const userdata = JSON.parse(localStorage.getItem('userdata'))
 const initialState = {
   user: user ? user : null,
   info: info ? info : null,
+  userdata: userdata ? userdata : null,
   isError: false,
   isSucces: false,
   message: ''
@@ -27,25 +29,21 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 
 //get data user
 
-// export const getDataUser = createAsyncThunk(
-//   'auth/getDataUser',
-//   async (info, thunkAPI) => {
-//     try {
-//       return await Get_info_user(info)
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue()
-//     }
-//   }
-// )
+export const getDataUser = createAsyncThunk('auth/getDataUser', async () => {
+  try {
+    return await Get_info_user()
+  } catch {}
+})
 
 // post data
 
 export const Postdatauser = createAsyncThunk(
-  'auth/login',
-  async (postuser, thunkAPI) => {
+  'auth/newdata',
+  async (userdata, thunkAPI) => {
     try {
-      return await PostUser(postuser)
+      return await PostUser(userdata)
     } catch (error) {
+      console.log('erreur', error)
       return thunkAPI.rejectWithValue()
     }
   }
@@ -65,6 +63,7 @@ export const authSlice = createSlice({
       state.isSucces = false
       state.isError = false
       state.message = ''
+      state.postisLoading = false
     }
   },
   extraReducers: builder => {
@@ -86,6 +85,16 @@ export const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, state => {
         state.user = null
+      })
+      .addCase(getDataUser.fulfilled, (state, action) => {
+        state.info = action.payload
+      })
+      .addCase(Postdatauser.pending, state => {
+        state.postisLoading = true
+      })
+
+      .addCase(Postdatauser.fulfilled, (state, action) => {
+        state.userdata = action.payload
       })
   }
 })

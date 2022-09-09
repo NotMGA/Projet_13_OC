@@ -16,7 +16,7 @@ const get_info_user = async infoUser => {
   if (response.data) {
     localStorage.setItem('info', JSON.stringify(response.data))
   }
-  console.log('sssssssssssss')
+
   return response.data
 }
 

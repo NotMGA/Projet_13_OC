@@ -2,30 +2,32 @@ import '../../Style/Edit_user/index.css'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Get_info_user from '../../Redux/Userinfo'
-// import { getDataUser } from '../../Redux/authSlice.js'
+import { getDataUser, Postdatauser } from '../../Redux/authSlice.js'
+import PostUser from '../../Redux/Edituser'
 
 import { useNavigate } from 'react-router-dom'
 function Edit() {
-  const test = ''
   const [hideform, sethideform] = useState(false)
-  const [userformData, setFormData] = useState({
-    lastname: '',
-    firstname: ''
+  const [userformData, setuserFormData] = useState({
+    lastName: '',
+    firstName: ''
   })
   const { lastName, firstName } = userformData
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   Get_info_user()
   const { info } = useSelector(state => state.auth)
+
   const firstName_ = info.body.firstName
   const lastName_ = info.body.lastName
 
-  const navigate = useNavigate
   console.log('info------', info)
   if (localStorage.length == 0) {
     navigate('/')
   }
 
   const onChange = e => {
-    setFormData(prevState => ({
+    setuserFormData(prevState => ({
       ...prevState,
       [e.target.name]: e.target.value
     }))
@@ -34,37 +36,51 @@ function Edit() {
     sethideform(!hideform)
   }
 
+  //send data
+
+  const onSubmit = e => {
+    e.preventDefault()
+    const formDatasend = {
+      firstName,
+      lastName
+    }
+    console.log(formDatasend)
+    dispatch(Postdatauser(formDatasend))
+  }
+
   return (
     <div className="header">
       <h1>
         Welcome back ---
         <br />
+        {/* {firstName_} {lastName_} */}
         {firstName_} {lastName_}
       </h1>
       <button className="edit-button" onClick={handleclick}>
         Edit Name
       </button>
       <form
+        onSubmit={onSubmit}
         className="form_user"
         style={{ display: hideform ? 'block' : 'none' }}
       >
         <h2>Edit name</h2>
         <div className="input-wrapper">
-          <label htmlFor="firstname">FirstName</label>
+          <label htmlFor="firstName">FirstName</label>
           <input
             type="text"
-            id="firstname"
-            name="firstname"
+            id="firstName"
+            name="firstName"
             value={firstName}
             onChange={onChange}
           />
         </div>
         <div className="input-wrapper">
-          <label htmlFor="lastname">LastName</label>
+          <label htmlFor="lastName">LastName</label>
           <input
             type="text"
-            id="lastname"
-            name="lastname"
+            id="lastName"
+            name="lastName"
             value={lastName}
             onChange={onChange}
           />
