@@ -2,7 +2,7 @@ import '../../Style/Edit_user/index.css'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Get_info_user from '../../Redux/Userinfo'
-import { getDataUser } from '../../Redux/authSlice'
+// import { getDataUser } from '../../Redux/authSlice.js'
 
 import { useNavigate } from 'react-router-dom'
 function Edit() {
@@ -13,7 +13,7 @@ function Edit() {
     firstname: ''
   })
   const { lastName, firstName } = userformData
-  getDataUser()
+  Get_info_user()
   const { info } = useSelector(state => state.auth)
   const firstName_ = info.body.firstName
   const lastName_ = info.body.lastName

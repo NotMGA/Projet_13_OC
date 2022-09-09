@@ -27,14 +27,16 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 
 //get data user
 
-export const getDataUser = createAsyncThunk(
-  'auth/getDataUser',
-  async (info, thunkAPI) => {
-    try {
-      return await Get_info_user(info)
-    } catch {}
-  }
-)
+// export const getDataUser = createAsyncThunk(
+//   'auth/getDataUser',
+//   async (info, thunkAPI) => {
+//     try {
+//       return await Get_info_user(info)
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue()
+//     }
+//   }
+// )
 
 // post data
 
@@ -84,9 +86,6 @@ export const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, state => {
         state.user = null
-      })
-      .addCase(getDataUser.fulfilled, (state, action) => {
-        state.info = action.payload
       })
   }
 })
