@@ -1,8 +1,9 @@
 import '../../Style/Login_UI/index.css'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { login, reste } from '../../Redux/authSlice.js'
+import { login, reste, getDataUser } from '../../Redux/authSlice.js'
 import { useNavigate } from 'react-router-dom'
+import Get_info_user from '../../Redux/Userinfo'
 function Login_UI() {
   const [formData, setFormData] = useState({
     email: '',
@@ -41,6 +42,7 @@ function Login_UI() {
       password
     }
     dispatch(login(userData))
+    // dispatch(getDataUser())
   }
 
   if (isLoading) {

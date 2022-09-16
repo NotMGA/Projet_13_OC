@@ -2,7 +2,7 @@ import '../../Style/Banner_home/index.css'
 import React from 'react'
 function Banner() {
   return (
-    <div class="hero">
+    <div className="hero">
       <section className="hero-content">
         <h2 className="sr-only">Promoted Content</h2>
         <p className="subtitle">No fees.</p>
