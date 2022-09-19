@@ -1,3 +1,4 @@
+// Use to store all the data send from the authservice
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from './authservice'
 import PostUser from './Edituser.js'
@@ -16,12 +17,11 @@ const initialState = {
 }
 
 // Login user
+//get Login data
 export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
-    console.log(user)
     return await authService.login(user)
   } catch (error) {
-    //add iserror true
     console.log('erreur', error)
     return thunkAPI.rejectWithValue()
   }
@@ -53,7 +53,7 @@ export const Postdatauser = createAsyncThunk(
 export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout()
 })
-
+//store
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -68,24 +68,28 @@ export const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-
+      //if login is pending udate state
       .addCase(login.pending, state => {
         state.isLoading = true
       })
+      //if login is fulfilled udate state
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
         state.user = action.payload
       })
+      //if login is rejected udate state
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
         state.user = null
       })
+      //clear the state
       .addCase(logout.fulfilled, state => {
         state.user = null
       })
+      //store getdatauser in state info
       .addCase(getDataUser.fulfilled, (state, action) => {
         state.info = action.payload
       })

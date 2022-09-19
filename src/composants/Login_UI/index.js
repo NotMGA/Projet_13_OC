@@ -15,13 +15,13 @@ function Login_UI() {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     state => state.auth
   )
+
   useEffect(() => {
-    console.log('iserror', isError)
-    console.log('isccues', isSuccess)
+    //if we are not loggin return to the main page
     if (isError) {
       navigate('/')
     }
-
+    // if we are login go to the user page
     if (isSuccess || user) {
       navigate('/user')
     }
@@ -35,6 +35,7 @@ function Login_UI() {
       [e.target.name]: e.target.value
     }))
   }
+  // send e main and passord to the API
   const onSubmit = e => {
     e.preventDefault()
     const userData = {
@@ -42,7 +43,6 @@ function Login_UI() {
       password
     }
     dispatch(login(userData))
-    // dispatch(getDataUser())
   }
 
   if (isLoading) {

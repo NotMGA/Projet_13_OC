@@ -7,36 +7,30 @@ import PostUser from '../../Redux/Edituser'
 
 import { useNavigate } from 'react-router-dom'
 function Edit() {
-  const [hideform, sethideform] = useState(false)
+  const [hideform, sethideform] = useState(false) //state for hide edit menu
   const [userformData, setuserFormData] = useState({
     lastName: '',
     firstName: ''
   })
+  let firstName_ = ''
+  let lastName_ = ''
   const { lastName, firstName } = userformData
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  Get_info_user()
+  Get_info_user() // function to get user data
 
-  // const { info } = useSelector(state => state.auth)
-  // console.log(info, 'ddddddddddddddddddddddddddd')
-  // const firstName_ = info.body.firstName
-  // const lastName_ = info.body.lastName
   const { info } = useSelector(state => state.auth)
-
-  console.log(info, 'ddddddddddddddddddddddddddd')
-  let firstName_ = ''
-  let lastName_ = ''
-  if (!info) {
-    navigate(0)
+  //cheack if the state info user is empty
+  if (info == null) {
+    useEffect(() => {
+      navigate(0)
+    })
   } else {
     firstName_ = info.body.firstName
     lastName_ = info.body.lastName
-    navigate(0)
   }
-  // firstName_ = info.body.firstName
-  // lastName_ = info.body.lastName
-
+  //return to the main page if we are njot login
   if (localStorage.length == 0) {
     navigate('/')
   }
@@ -47,6 +41,7 @@ function Edit() {
       [e.target.name]: e.target.value
     }))
   }
+  //update last name and first name  form
   const handleclick = () => {
     sethideform(!hideform)
     setuserFormData({
@@ -55,8 +50,7 @@ function Edit() {
     })
   }
 
-  //send data
-
+  //send user first name and last name to the API
   const onSubmit = e => {
     e.preventDefault()
     const formDatasend = {
@@ -77,7 +71,6 @@ function Edit() {
       <h1>
         Welcome back
         <br />
-        {/* {firstName_} {lastName_} */}
       </h1>
       <div
         className="name-edit-warp"
