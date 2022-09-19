@@ -12,9 +12,15 @@ function Edit() {
     lastName: '',
     firstName: ''
   })
+  // const [usernames, setusernames] = useState({
+  //   lastName_: '',
+  //   firstName_: ''
+  // })
+
   let firstName_ = ''
   let lastName_ = ''
   const { lastName, firstName } = userformData
+  // const { lastName_, firstName_ } = usernames
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -30,6 +36,7 @@ function Edit() {
     firstName_ = info.body.firstName
     lastName_ = info.body.lastName
   }
+
   //return to the main page if we are njot login
   if (localStorage.length == 0) {
     navigate('/')
@@ -57,15 +64,18 @@ function Edit() {
       firstName,
       lastName
     }
-    navigate(0)
+
     sethideform(!hideform)
     dispatch(Postdatauser(formDatasend))
+
+    setTimeout(function() {
+      navigate(0)
+    }, 200)
   }
 
   const Close = e => {
     sethideform(!hideform)
   }
-
   return (
     <div className="header">
       <h1>
@@ -113,10 +123,10 @@ function Edit() {
           </div>
         </div>
         <div className="input">
-          <button type="submit" className="send-button_">
+          <button type="submit" className="send-button__">
             Edit
           </button>
-          <button className="send-button_" onClick={Close}>
+          <button className="send-button_" type="button" onClick={Close}>
             Close
           </button>
         </div>

@@ -40,6 +40,19 @@
   background-color: #00bc77;
   color: #fff;
 }
+.send-button__ {
+  display: block;
+  width: 100px;
+  padding: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+}
 .test {
   display: none;
 }
