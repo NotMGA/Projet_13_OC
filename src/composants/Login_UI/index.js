@@ -35,7 +35,7 @@ function Login_UI() {
       [e.target.name]: e.target.value
     }))
   }
-  // send e main and passord to the API
+  // send e-mail and passord to the API
   const onSubmit = e => {
     e.preventDefault()
     const userData = {

@@ -12,15 +12,10 @@ function Edit() {
     lastName: '',
     firstName: ''
   })
-  // const [usernames, setusernames] = useState({
-  //   lastName_: '',
-  //   firstName_: ''
-  // })
 
   let firstName_ = ''
   let lastName_ = ''
   const { lastName, firstName } = userformData
-  // const { lastName_, firstName_ } = usernames
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -37,7 +32,7 @@ function Edit() {
     lastName_ = info.body.lastName
   }
 
-  //return to the main page if we are njot login
+  //return to the main page if we are not login
   if (localStorage.length == 0) {
     navigate('/')
   }

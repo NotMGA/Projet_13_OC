@@ -5,11 +5,10 @@ const API_URL_USER = 'http://localhost:3001/api/v1/user/profile'
 //Post data user
 
 const PostUser = async PostUserinfo => {
-  console.log()
+  //get converte data from local storage into json
   const user = JSON.parse(localStorage.getItem('user'))
   console.log(user.body.token)
 
-  console.log('ssssssssssssssssssssssssssssssssssssssssssssss')
   const response = await axios.put(API_URL_USER, PostUserinfo, {
     headers: {
       Authorization: 'Bearer ' + user.body.token
