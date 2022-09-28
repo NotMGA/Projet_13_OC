@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from './authservice'
 import PostUser from './Edituser.js'
-import Get_info_user from './Userinfo'
+import Get_info_user from './Userinfo.js'
 
 const user = JSON.parse(localStorage.getItem('user'))
 const info = JSON.parse(localStorage.getItem('info'))
@@ -11,6 +11,7 @@ const initialState = {
   user: user ? user : null,
   info: info ? info : null,
   userdata: userdata ? userdata : null,
+  // userdata: '',
   isError: false,
   isSucces: false,
   message: ''
@@ -29,13 +30,17 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 
 //get data user
 
-export const getDataUser = createAsyncThunk('auth/getDataUser', async () => {
-  try {
-    return await Get_info_user()
-  } catch {}
-})
-
-// post data
+export const getDataUser = createAsyncThunk(
+  'auth/getDataUser',
+  async (info, thunkAPI) => {
+    try {
+      return await Get_info_user(info)
+    } catch (error) {
+      console.log('erreur', error)
+      return thunkAPI.rejectWithValue()
+    }
+  }
+)
 
 export const Postdatauser = createAsyncThunk(
   'auth/newdata',
@@ -92,6 +97,9 @@ export const authSlice = createSlice({
       //store getdatauser in state info
       .addCase(getDataUser.fulfilled, (state, action) => {
         state.info = action.payload
+      })
+      .addCase(getDataUser.pending, state => {
+        state.postisLoading = true
       })
       .addCase(Postdatauser.pending, state => {
         state.postisLoading = true

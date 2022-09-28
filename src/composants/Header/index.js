@@ -1,13 +1,22 @@
 import '../../Style/Header/index.css'
-import React, { useReducer } from 'react'
+import React from 'react'
 import img from '../../Assets/argentBankLogo.png'
-import { link, useNavigate } from 'react-router-dom'
+import logoutimg from '../../Assets/logoutv2.png'
+import Profil from '../../Assets/profil.png'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reste } from '../../Redux/authSlice'
 function Header() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { user } = useSelector(state => state.auth)
+  const { info } = useSelector(state => state.auth)
+  let name = ''
+  if (info == null) {
+  } else {
+    name = info.body.firstName
+  }
+
   const onLougout = () => {
     dispatch(logout())
     dispatch(reste())
@@ -25,10 +34,16 @@ function Header() {
       </a>
       <div>
         {user ? (
-          <a className="main-nav-item" href="./login" onClick={onLougout}>
-            <i className="fa fa-user-circle"></i>
-            Logout
-          </a>
+          <div className="right_conect">
+            <img className="imglogout" src={Profil} alt=" profil"></img>
+            <div>{name}</div>
+
+            <a className="main-nav-item" href="./login" onClick={onLougout}>
+              <img className="imglogout" src={logoutimg} alt="logout"></img>
+              <i className="fa fa-user-circle"></i>
+              Logout
+            </a>
+          </div>
         ) : (
           <>
             <a className="main-nav-item" href="./login">

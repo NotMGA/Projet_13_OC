@@ -4,8 +4,16 @@ import Footer from '../../composants/Footer'
 import Header from '../../composants/Header'
 import '../../Style/Page_user/index.css'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { getDataUser } from '../../Redux/authSlice.js'
+import { useEffect } from 'react'
 
 function User() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getDataUser())
+  })
+
   return (
     <div>
       <Header />

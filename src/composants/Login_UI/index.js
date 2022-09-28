@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { login, reste, getDataUser } from '../../Redux/authSlice.js'
 import { useNavigate } from 'react-router-dom'
-import Get_info_user from '../../Redux/Userinfo'
 function Login_UI() {
   const [formData, setFormData] = useState({
     email: '',
@@ -23,6 +22,7 @@ function Login_UI() {
     }
     // if we are login go to the user page
     if (isSuccess || user) {
+      dispatch(getDataUser())
       navigate('/user')
     }
 

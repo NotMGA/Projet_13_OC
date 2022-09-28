@@ -1,11 +1,10 @@
 import '../../Style/Edit_user/index.css'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import Get_info_user from '../../Redux/Userinfo'
 import { getDataUser, Postdatauser } from '../../Redux/authSlice.js'
-import PostUser from '../../Redux/Edituser'
 
 import { useNavigate } from 'react-router-dom'
+
 function Edit() {
   const [hideform, sethideform] = useState(false) //state for hide edit menu
   const [userformData, setuserFormData] = useState({
@@ -19,21 +18,18 @@ function Edit() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  Get_info_user() // function to get user data
+  let { info } = useSelector(state => state.auth)
 
-  const { info } = useSelector(state => state.auth)
   //cheack if the state info user is empty
+
   if (info == null) {
-    useEffect(() => {
-      navigate(0)
-    })
   } else {
     firstName_ = info.body.firstName
     lastName_ = info.body.lastName
   }
 
   //return to the main page if we are not login
-  if (localStorage.length == 0) {
+  if (localStorage.length === 0) {
     navigate('/')
   }
 
@@ -62,9 +58,8 @@ function Edit() {
 
     sethideform(!hideform)
     dispatch(Postdatauser(formDatasend))
-
     setTimeout(function() {
-      navigate(0)
+      dispatch(getDataUser())
     }, 200)
   }
 
