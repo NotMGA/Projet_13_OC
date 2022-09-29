@@ -5,12 +5,11 @@ import PostUser from './Edituser.js'
 import Get_info_user from './Userinfo.js'
 
 const user = JSON.parse(localStorage.getItem('user'))
-const info = JSON.parse(localStorage.getItem('info'))
-const userdata = JSON.parse(localStorage.getItem('userdata'))
+// state initiale
 const initialState = {
   user: user ? user : null,
-  info: info ? info : null,
-  userdata: userdata ? userdata : null,
+  info: null,
+  userdata: null,
   // userdata: '',
   isError: false,
   isSucces: false,
